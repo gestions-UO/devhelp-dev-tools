@@ -1,48 +1,65 @@
-import type { Metadata } from "next";
-import { Inter, JetBrains_Mono } from "next/font/google";
-import "./globals.css";
-import Navbar from "@/components/layout/Navbar";
-import Footer from "@/components/layout/Footer";
+import type { Metadata, Viewport } from "next";
 
-// Configuración de Fuentes
-const inter = Inter({
-  subsets: ["latin"],
-  variable: "--font-inter",
-  display: "swap",
-  weight: ["400", "600", "900"],
-});
-
-const jetbrainsMono = JetBrains_Mono({
-  subsets: ["latin"],
-  variable: "--font-jetbrains",
-  display: "swap",
-  weight: ["400", "500"],
-});
-
-export const metadata: Metadata = {
-  title: "DEVHELP.DEV | by GESTIONS.ES",
-  description: "Rapid. Precise. Essential Utilities for Developers.",
+export const viewport: Viewport = {
+  themeColor: "#0a0a0a",
+  width: "device-width",
+  initialScale: 1,
 };
 
-export default function RootLayout({
-  children,
-}: Readonly<{
-  children: React.ReactNode;
-}>) {
-  return (
-    <html lang="es">
-      {/* NOTA: Hemos quitado 'bg-grid-pattern' y 'antialiased-tech' de aquí 
-         porque ya están aplicados directamente al tag 'body' en globals.css 
-      */}
-      <body className={`${inter.variable} ${jetbrainsMono.variable}`}>
-        
-        <Navbar />
-
-        {children}
-
-        <Footer />
-        
-      </body>
-    </html>
-  );
-}
+export const metadata: Metadata = {
+  metadataBase: new URL("https://devhelp.dev"),
+  title: {
+    default: "DevHelp // Engineering Workbench",
+    template: "%s | DevHelp",
+  },
+  description:
+    "Professional local-first developer workbench. Securely process JSON, JWT, Regex, and Logs with zero data leakage. 100% private execution.",
+  keywords: [
+    "Developer tools",
+    "Local-first",
+    "JSON Formatter",
+    "JWT Decoder",
+    "Regex Tester",
+    "Privacy focus",
+    "Engineering toolbox",
+    "Base64 converter",
+    "Epoch time",
+    "Web utilities",
+  ],
+  authors: [{ name: "Gestions.es", url: "https://gestions.es" }],
+  creator: "Gestions.es",
+  publisher: "Gestions.es",
+  formatDetection: {
+    email: false,
+    address: false,
+    telephone: false,
+  },
+  alternates: {
+    canonical: "/",
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-video-preview": -1,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+    },
+  },
+  openGraph: {
+    title: "DevHelp // Engineering Workbench",
+    description: "Secure, local-first development utilities. No cloud, no tracking.",
+    url: "https://devhelp.dev",
+    siteName: "DevHelp",
+    locale: "en_US",
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "DevHelp // Engineering Workbench",
+    description: "High-precision local-first utility suite for engineers.",
+    creator: "@jprcdev",
+  },
+};
