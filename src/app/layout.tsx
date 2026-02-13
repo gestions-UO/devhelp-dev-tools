@@ -1,26 +1,32 @@
 import type { Metadata, Viewport } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Inter, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
+import Navbar from "@/components/layout/Navbar";
+import Footer from "@/components/layout/Footer";
 
-// Configuración de fuentes originales
-const geistSans = Geist({
-  variable: "--font-geist-sans",
+// Font Configuration
+const inter = Inter({
   subsets: ["latin"],
+  variable: "--font-inter",
+  display: "swap",
+  weight: ["400", "600", "900"],
 });
 
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
+const jetbrainsMono = JetBrains_Mono({
   subsets: ["latin"],
+  variable: "--font-jetbrains",
+  display: "swap",
+  weight: ["400", "500"],
 });
 
-// Configuración de Viewport para dispositivos móviles y tema
+// Viewport settings for mobile responsiveness and browser theme
 export const viewport: Viewport = {
   themeColor: "#0a0a0a",
   width: "device-width",
   initialScale: 1,
 };
 
-// Metadatos optimizados para SEO y Previsualizaciones (Social Cards)
+// Optimized SEO & Open Graph Metadata
 export const metadata: Metadata = {
   metadataBase: new URL("https://devhelp.dev"),
   title: {
@@ -41,6 +47,7 @@ export const metadata: Metadata = {
     "Epoch time",
     "Web utilities",
     "Security tools",
+    "CLI dev tools",
   ],
   authors: [{ name: "Gestions.es", url: "https://gestions.es" }],
   creator: "Gestions.es",
@@ -66,18 +73,18 @@ export const metadata: Metadata = {
   },
   openGraph: {
     title: "DevHelp // Engineering Workbench",
-    description: "Secure, local-first development utilities. No cloud, no tracking.",
+    description: "Secure, local-first development utilities. No cloud, no tracking. Process your data privately.",
     url: "https://devhelp.dev",
     siteName: "DevHelp",
     locale: "en_US",
     type: "website",
-    // Nota: Next.js usará automáticamente el archivo opengraph-image.tsx si existe
+    // Note: Next.js automatically detects opengraph-image.tsx in the app directory
   },
   twitter: {
     card: "summary_large_image",
     title: "DevHelp // Engineering Workbench",
-    description: "High-precision local-first utility suite for engineers.",
-    creator: "@jprcdev",
+    description: "High-precision local-first utility suite for engineers. Security by design.",
+    creator: "@jprcdev", // Your Twitter handle
   },
 };
 
@@ -89,9 +96,18 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased bg-[#f8f9fa] text-[#0a0a0a] min-h-screen flex flex-col`}
+        className={`${inter.variable} ${jetbrainsMono.variable} antialiased bg-[#f8f9fa] text-[#0a0a0a] min-h-screen flex flex-col`}
       >
-        {children}
+        {/* Navigation Bar */}
+        <Navbar />
+
+        {/* Main Content Area */}
+        <main className="flex-grow">
+          {children}
+        </main>
+
+        {/* Technical Footer */}
+        <Footer />
       </body>
     </html>
   );
