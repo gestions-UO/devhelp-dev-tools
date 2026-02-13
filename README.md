@@ -47,4 +47,4 @@ To run this workbench locally:
 
 1. **Clone the repository:**
    ```bash
-   git clone [https://github.com/your-user/devhelp.git](https://github.com/your-user/devhelp.git)
+   git clone https://github.com/jinwolf2/devhelp-dev-tools.git
