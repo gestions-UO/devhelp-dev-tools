@@ -67,8 +67,7 @@ export default async function Image() {
             color: '#0a0a0a',
           }}
         >
-          Engineering <br />
-          Workbench.
+            DEVHELP.DEV
         </h1>
 
         <div style={{
