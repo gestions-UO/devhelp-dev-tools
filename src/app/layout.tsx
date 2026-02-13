@@ -98,6 +98,7 @@ export default function RootLayout({
       <body
         className={`${inter.variable} ${jetbrainsMono.variable} antialiased bg-[#f8f9fa] text-[#0a0a0a] min-h-screen flex flex-col`}
       >
+        <script src="https://analytics.ahrefs.com/analytics.js" data-key="iEPYn/QGRMN1cr6ag/DYlg" async></script>
         {/* Navigation Bar */}
         <Navbar />
 
