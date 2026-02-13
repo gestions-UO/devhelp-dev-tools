@@ -1,26 +1,76 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
+@theme {
+  /* --- PALETA DE COLORES "GESTIONS" --- */
+  --color-mod-json: #22c55e;
+  --color-mod-xml: #f97316;
+  --color-mod-jwt: #a855f7;
+  --color-mod-regex: #06b6d4;
+  --color-mod-time: #f59e0b;
+  --color-mod-diff: #f43f5e;
+  --color-mod-b64: #ec4899;
+  --color-mod-html: #e34c26;
+  --color-mod-log: #64748b;
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
+  --color-vscode-bg: #1e1e1e;
+  --color-paper-bg: #ffffff;
+  --color-tech-gray: #f3f4f6;
+  --color-tech-border: #e5e5e5;
+  --color-tech-black: #0a0a0a;
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+  /* --- TIPOGRAFÍA --- */
+  --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-jetbrains), ui-monospace, SFMono-Regular, monospace;
+
+  /* --- ANIMACIONES --- */
+  @keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
   }
+  --animate-fade-in-up: fadeInUp 0.5s ease-out;
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+/* --- ESTILOS GLOBALES --- */
+
+@layer base {
+  body {
+    /* Clases nativas de Tailwind */
+    @apply font-sans min-h-screen flex flex-col text-tech-black;
+
+    /* Estilos Custom (Antialiased Tech) */
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+
+    /* Fondo Grid Pattern */
+    background-color: var(--color-tech-gray);
+    background-image: 
+      linear-gradient(#e5e7eb 1px, transparent 1px),
+      linear-gradient(90deg, #e5e7eb 1px, transparent 1px);
+    background-size: 50px 50px;
+  }
+
+  /* Scrollbars estilo "Industrial" */
+  ::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+  ::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  ::-webkit-scrollbar-thumb {
+    @apply bg-gray-400 rounded;
+    border: 2px solid transparent;
+    background-clip: content-box;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    @apply bg-gray-600;
+  }
+
+  /* Override para editores oscuros */
+  .dark-scroll ::-webkit-scrollbar-thumb {
+    @apply bg-gray-600;
+  }
+  .dark-scroll ::-webkit-scrollbar-track {
+    @apply bg-vscode-bg;
+  }
 }

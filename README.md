@@ -1,36 +1,50 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 🛠️ DEVHELP.DEV | Professional Developer Workbench
 
-## Getting Started
+> **Rapid. Precise. Essential.** A high-performance suite of developer utilities designed with a local-first, zero-latency philosophy.
 
-First, run the development server:
+---
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+## 🔒 The Privacy Manifesto
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Unlike traditional online formatters and tools, **DEVHELP.DEV** is strictly client-side.
+- **Zero Data Transfer:** Your sensitive data (JSON, JWT, Logs) never leaves your browser.
+- **In-Memory Processing:** All logic is executed in your machine's RAM.
+- **No Persistence:** No databases, no tracking, no cookies.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+---
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## 🧰 Integrated Toolbox
 
-## Learn More
+| Module | Technical Capability |
+| :--- | :--- |
+| **JSON Engine** | Formatting, validation, and aggressive minification. |
+| **XML Parser** | Tree-view visualization and XML-to-JSON conversion. |
+| **JWT Decoder** | Secure client-side inspection of token claims. |
+| **Regex Animator** | Step-by-step simulation of the regex evaluation engine. |
+| **Epoch Time** | Bi-directional Unix timestamp conversion with human dates. |
+| **Diff Checker** | Visual text comparison powered by Google's diff-match-patch. |
+| **Base64 Tool** | UTF-8 safe encoding and decoding. |
+| **HTML Studio** | Virtual File System (VFS) with multi-device live preview. |
+| **Log Viewer** | Pattern-based line analysis with multi-keyword filtering. |
 
-To learn more about Next.js, take a look at the following resources:
+---
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## 🏗️ Technical Stack
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+This project is built using the latest modern web standards:
 
-## Deploy on Vercel
+- **Framework:** [Next.js 14+](https://nextjs.org/) (App Router)
+- **Styling:** [Tailwind CSS v4](https://tailwindcss.com/) (Industrial Design System)
+- **Editors:** [CodeMirror 6](https://codemirror.net/) (Stateful code editing)
+- **Icons:** [React Icons](https://react-icons.github.io/react-icons/) (Bootstrap Icons set)
+- **Language:** [TypeScript](https://www.typescriptlang.org/) (Strictly typed)
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+---
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## 🚀 Getting Started
+
+To run this workbench locally:
+
+1. **Clone the repository:**
+   ```bash
+   git clone [https://github.com/your-user/devhelp.git](https://github.com/your-user/devhelp.git)
