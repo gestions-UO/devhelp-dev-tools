@@ -6,7 +6,7 @@ import { diff_match_patch } from "diff-match-patch";
 import ToolShell from "@/components/layout/ToolShell";
 import CodeEditor from "@/components/ui/CodeEditor";
 import Button from "@/components/ui/Button";
-import { BsArrowsCollapse, BsArrowLeftRight, BsPencilSquare, BsTrash } from "react-icons/bs";
+import { ArrowsDown, ArrowSwapHorizontal2, Pen, Trash } from "reicon-react";
 
 export default function DiffChecker() {
   const [leftText, setLeftText] = useState("function hello() {\n  return true;\n}");
@@ -75,7 +75,7 @@ export default function DiffChecker() {
           value={leftText} 
           onChange={setLeftText} 
           extensions={[javascript()]} 
-          theme="dark" 
+          theme="light" 
         />
       }
       
@@ -98,22 +98,22 @@ export default function DiffChecker() {
         <>
           {/* Botón Principal: Alterna entre Comparar y Editar */}
           {!diffResult ? (
-            <Button size="sm" variant="primary" icon={<BsArrowsCollapse />} onClick={handleCompare}>
+            <Button size="sm" variant="primary" icon={<ArrowsDown />} onClick={handleCompare}>
               Compare
             </Button>
           ) : (
-            <Button size="sm" variant="outline" icon={<BsPencilSquare />} onClick={() => setDiffResult(null)}>
+            <Button size="sm" variant="outline" icon={<Pen />} onClick={() => setDiffResult(null)}>
               Edit Modified
             </Button>
           )}
 
-          <Button size="sm" variant="outline" icon={<BsArrowLeftRight />} onClick={handleSwap}>
+          <Button size="sm" variant="outline" icon={<ArrowSwapHorizontal2 />} onClick={handleSwap}>
             Swap
           </Button>
 
           <div className="mx-2 h-6 w-px bg-gray-300"></div>
 
-          <Button size="sm" variant="danger" icon={<BsTrash />} onClick={() => { setLeftText(""); setRightText(""); setDiffResult(null); }}>
+          <Button size="sm" variant="danger" onClick={() => { setLeftText(""); setRightText(""); setDiffResult(null); }}>
             Clear All
           </Button>
         </>

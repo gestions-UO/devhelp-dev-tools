@@ -5,7 +5,7 @@ import { json } from "@codemirror/lang-json";
 import ToolShell from "@/components/layout/ToolShell";
 import CodeEditor from "@/components/ui/CodeEditor";
 import Button from "@/components/ui/Button"; 
-import { BsFileEarmarkCode, BsFileZip, BsTrash } from "react-icons/bs";
+import { CodeFile, FileZip, Trash } from "reicon-react";
 
 export default function JsonEditor() {
   const [input, setInput] = useState("");
@@ -55,7 +55,7 @@ export default function JsonEditor() {
           value={input} 
           onChange={setInput} 
           extensions={[json()]} 
-          theme="dark" 
+          theme="light" 
           placeholder="// Paste raw JSON here..." 
         />
       }
@@ -73,17 +73,17 @@ export default function JsonEditor() {
       // HORIZONTAL TOOLBAR ACTIONS
       actionsComponent={
         <>
-          <Button size="sm" variant="outline" icon={<BsFileEarmarkCode />} onClick={handleFormat}>
+          <Button size="sm" variant="outline" icon={<CodeFile />} onClick={handleFormat}>
             Format
           </Button>
 
-          <Button size="sm" variant="outline" icon={<BsFileZip />} onClick={handleMinify}>
+          <Button size="sm" variant="outline" icon={<FileZip />} onClick={handleMinify}>
             Minify
           </Button>
 
           <div className="mx-2 h-6 w-px bg-gray-300"></div>
 
-          <Button size="sm" variant="danger" icon={<BsTrash />} onClick={handleClear}>
+          <Button size="sm" variant="danger" onClick={handleClear}>
             Clear
           </Button>
         </>

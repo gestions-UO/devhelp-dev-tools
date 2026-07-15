@@ -5,7 +5,7 @@ import { javascript } from "@codemirror/lang-javascript";
 import ToolShell from "@/components/layout/ToolShell";
 import CodeEditor from "@/components/ui/CodeEditor";
 import Button from "@/components/ui/Button";
-import { BsFileEarmarkBinary, BsFileText, BsTrash } from "react-icons/bs";
+import { CodeFile, FileText, Trash } from "reicon-react";
 
 export default function Base64Tool() {
   const [input, setInput] = useState("");
@@ -57,7 +57,7 @@ export default function Base64Tool() {
           value={input} 
           onChange={setInput} 
           extensions={[javascript()]} 
-          theme="dark" 
+          theme="light" 
           placeholder="Type text or paste Base64..." 
         />
       }
@@ -74,17 +74,17 @@ export default function Base64Tool() {
       
       actionsComponent={
         <>
-          <Button size="sm" variant="primary" icon={<BsFileEarmarkBinary />} onClick={handleEncode}>
+          <Button size="sm" variant="primary" icon={<CodeFile />} onClick={handleEncode}>
             Encode
           </Button>
 
-          <Button size="sm" variant="outline" icon={<BsFileText />} onClick={handleDecode}>
+          <Button size="sm" variant="outline" icon={<FileText />} onClick={handleDecode}>
             Decode
           </Button>
 
           <div className="mx-2 h-6 w-px bg-gray-300"></div>
 
-          <Button size="sm" variant="danger" icon={<BsTrash />} onClick={() => { setInput(""); setOutput(""); }}>
+          <Button size="sm" variant="danger" onClick={() => { setInput(""); setOutput(""); }}>
             Clear
           </Button>
         </>

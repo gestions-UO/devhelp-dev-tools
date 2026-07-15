@@ -21,13 +21,13 @@ export default function CodeEditor({
   onChange,
   extensions = [],
   readOnly = false,
-  theme = "dark",
+  theme = "light",
   placeholder,
   className,
 }: CodeEditorProps) {
   
-  // Selección de tema visual
-  const editorTheme = theme === "dark" ? dracula : eclipse;
+  // Selección de tema visual (Forced to eclipse for light mode)
+  const editorTheme = eclipse;
 
   return (
     <div className={`h-full w-full overflow-hidden text-sm font-mono ${className}`}>

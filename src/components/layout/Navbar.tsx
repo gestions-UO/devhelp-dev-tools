@@ -1,43 +1,48 @@
+"use client";
+
 import Link from "next/link";
+import { motion } from "framer-motion";
 
 export default function Navbar() {
   return (
-    <nav className="sticky top-0 z-50 w-full border-b border-gray-200 bg-white/80 backdrop-blur-md">
-      <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 md:h-20 md:px-6">
+    <motion.nav 
+      initial={{ y: -20, opacity: 0 }}
+      animate={{ y: 0, opacity: 1 }}
+      transition={{ duration: 0.6, ease: "easeOut" }}
+      className="fixed top-6 inset-x-0 z-50 mx-auto max-w-5xl px-4"
+    >
+      <div className="flex h-14 items-center justify-between px-6 bg-white/40 backdrop-blur-2xl border border-white/60 shadow-[0_8px_30px_rgb(0,0,0,0.06)] rounded-full">
         
         {/* LOGO AREA */}
-        <Link href="/" className="flex items-center gap-2 group">
-          {/* Icono Geométrico "G" */}
-          <div className="flex h-5 w-5 shrink-0 items-center justify-center bg-tech-black transition-transform group-hover:scale-105 md:h-6 md:w-6">
+        <Link href="/" className="flex items-center gap-3 group">
+          <div className="flex h-7 w-7 items-center justify-center bg-gradient-to-br from-gray-900 to-gray-700 rounded-full transition-transform duration-500 group-hover:scale-110 shadow-sm">
             <svg
-              className="h-3 w-3 text-white md:h-4 md:w-4"
+              className="h-3.5 w-3.5 text-white"
               fill="none"
               stroke="currentColor"
               viewBox="0 0 24 24"
             >
-              <path
-                strokeLinecap="square"
-                strokeLinejoin="miter"
-                strokeWidth="2"
-                d="M13 10V3L4 14h7v7l9-11h-7z"
-              />
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
             </svg>
           </div>
-          
-          {/* Texto del Logo */}
-          <h1 className="text-lg font-black tracking-tighter uppercase md:text-2xl">
-            DEVHELP<span className="text-gray-400">.DEV</span>
+          <h1 className="text-xl font-bold tracking-tight text-gray-900">
+            DevHelp<span className="text-gray-400 font-medium">.dev</span>
           </h1>
         </Link>
 
-        {/* ATTRIBUTION BADGE */}
-        <div className="shrink-0">
-          <span className="inline-flex items-center rounded-full border border-gray-300 bg-gray-100 px-2 py-1 font-mono text-[8px] font-bold uppercase tracking-widest text-gray-600 md:px-3 md:py-1.5 md:text-[10px]">
-            [ <span className="hidden sm:inline mr-1">BY</span>GESTIONS.ES ]
+        {/* ATTRIBUTION BADGE & NAV LINKS */}
+        <div className="flex items-center gap-6">
+          <div className="hidden md:flex items-center gap-6 text-sm font-medium text-gray-500">
+            <Link href="/launcher" className="hover:text-gray-900 transition-colors">Tools</Link>
+            <Link href="/docs" className="hover:text-gray-900 transition-colors">Docs</Link>
+          </div>
+          <div className="h-4 w-px bg-gray-300 hidden md:block"></div>
+          <span className="inline-flex items-center rounded-full bg-white/60 px-3 py-1 text-[10px] font-bold uppercase tracking-widest text-gray-500 shadow-sm border border-white/80">
+            By Gestions
           </span>
         </div>
         
       </div>
-    </nav>
+    </motion.nav>
   );
 }

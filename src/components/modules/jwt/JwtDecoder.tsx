@@ -6,7 +6,7 @@ import { javascript } from "@codemirror/lang-javascript";
 import ToolShell from "@/components/layout/ToolShell";
 import CodeEditor from "@/components/ui/CodeEditor";
 import Button from "@/components/ui/Button";
-import { BsShieldCheck, BsTrash } from "react-icons/bs";
+import { ShieldCheck, Trash } from "reicon-react";
 
 export default function JwtDecoder() {
   const [input, setInput] = useState("");
@@ -72,7 +72,7 @@ export default function JwtDecoder() {
           value={input} 
           onChange={setInput} 
           extensions={[javascript()]} 
-          theme="dark" 
+          theme="light" 
           placeholder="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..." 
         />
       }
@@ -84,13 +84,13 @@ export default function JwtDecoder() {
       // HORIZONTAL TOOLBAR ACTIONS
       actionsComponent={
         <>
-          <Button size="sm" variant="primary" icon={<BsShieldCheck />} onClick={handleDecode}>
+          <Button size="sm" variant="primary" icon={<ShieldCheck />} onClick={handleDecode}>
             Decode manually
           </Button>
           
           <div className="mx-2 h-6 w-px bg-gray-300"></div>
 
-          <Button size="sm" variant="danger" icon={<BsTrash />} onClick={() => { setInput(""); setOutput(""); }}>
+          <Button size="sm" variant="danger" onClick={() => { setInput(""); setOutput(""); }}>
             Clear
           </Button>
         </>

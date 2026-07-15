@@ -6,7 +6,7 @@ import { json } from "@codemirror/lang-json";
 import ToolShell from "@/components/layout/ToolShell";
 import CodeEditor from "@/components/ui/CodeEditor";
 import Button from "@/components/ui/Button";
-import { BsFileEarmarkCode, BsBraces, BsFileZip } from "react-icons/bs";
+import { CodeFile, Code, FileZip } from "reicon-react";
 
 export default function XmlParser() {
   const [input, setInput] = useState("");
@@ -117,7 +117,7 @@ export default function XmlParser() {
       statusMessage={status}
       
       inputComponent={
-        <CodeEditor value={input} onChange={setInput} extensions={[xml()]} theme="dark" placeholder="" />
+        <CodeEditor value={input} onChange={setInput} extensions={[xml()]} theme="light" placeholder="" />
       }
       
       outputComponent={
@@ -127,12 +127,12 @@ export default function XmlParser() {
       // HORIZONTAL TOOLBAR ACTIONS
       actionsComponent={
         <>
-          <Button size="sm" variant="outline" icon={<BsFileEarmarkCode />} onClick={handlePrettify}>Format</Button>
-          <Button size="sm" variant="outline" icon={<BsFileZip />} onClick={handleMinify}>Minify</Button>
+          <Button size="sm" variant="outline" icon={<CodeFile />} onClick={handlePrettify}>Format</Button>
+          <Button size="sm" variant="outline" icon={<FileZip />} onClick={handleMinify}>Minify</Button>
           
           <div className="mx-2 h-6 w-px bg-gray-300"></div>
 
-          <Button size="sm" variant="primary" icon={<BsBraces />} onClick={handleToJson}>To JSON</Button>
+          <Button size="sm" variant="primary" icon={<Code />} onClick={handleToJson}>To JSON</Button>
         </>
       }
     />

@@ -1,4 +1,9 @@
+"use client";
+
 import { ReactNode } from "react";
+import Link from "next/link";
+import { motion } from "framer-motion";
+import { Squares, ArrowLeft } from "reicon-react";
 
 interface ToolShellProps {
   title: string;
@@ -25,76 +30,87 @@ export default function ToolShell({
   inputStats = "--",
   statusMessage = "Ready",
 }: ToolShellProps) {
-  
   const colorVar = `var(--color-${colorName})`;
 
   return (
-    <div className="flex h-[calc(100vh-64px)] md:h-[calc(100vh-80px)] flex-col bg-gray-100 overflow-hidden">
+    <div className="relative flex flex-col min-h-screen bg-transparent p-4 md:p-8">
       
-      {/* 1. HEADER DE LA HERRAMIENTA + TOOLBAR (NUEVO DISEÑO) */}
-      <header className="flex flex-col border-b border-gray-300 bg-white shrink-0 z-20 shadow-sm">
-        
-        {/* Fila Superior: Título y Status */}
-        <div className="flex items-center justify-between px-4 h-12 border-b border-gray-100">
-            <div className="flex items-center gap-2 font-black uppercase tracking-tighter">
-                <div className="w-3 h-3 rounded-sm" style={{ backgroundColor: colorVar }}></div>
-                <span className="text-gray-800">{title}</span>
-                <span className="text-gray-300">/</span>
-                <span style={{ color: colorVar }}>{subtitle}</span>
+      {/* Top Navigation & Breadcrumbs */}
+      <motion.div 
+        initial={{ opacity: 0, y: -20 }}
+        animate={{ opacity: 1, y: 0 }}
+        className="w-full max-w-[1600px] mx-auto mb-6 flex items-center justify-between z-10"
+      >
+        <div className="flex items-center gap-4">
+          <Link href="/launcher" className="flex items-center justify-center w-10 h-10 bg-white/50 backdrop-blur-md rounded-full shadow-sm border border-white hover:bg-white transition-all text-gray-500 hover:text-gray-900">
+            <ArrowLeft className="w-6 h-6" />
+          </Link>
+          <div className="flex items-center gap-3">
+            <div className="w-8 h-8 rounded-xl flex items-center justify-center shadow-sm" style={{ backgroundColor: `color-mix(in srgb, ${colorVar}, white 85%)`, color: colorVar }}>
+              <Squares className="w-4 h-4" />
             </div>
-            <div className="text-[10px] font-mono uppercase text-gray-400 bg-gray-50 px-2 py-1 rounded border border-gray-200">
-                {statusMessage}
+            <div>
+              <h1 className="text-xl font-bold tracking-tight text-gray-900 leading-none">{title}</h1>
+              <span className="text-xs font-medium text-gray-500">{subtitle}</span>
             </div>
+          </div>
         </div>
+        <div className="hidden md:flex items-center gap-2">
+          <div className="px-3 py-1.5 bg-white/50 backdrop-blur-md border border-white rounded-full shadow-sm">
+            <span className="text-xs font-mono font-medium text-gray-500 flex items-center gap-2">
+              <span className="w-2 h-2 rounded-full bg-green-400 animate-pulse"></span>
+              {statusMessage}
+            </span>
+          </div>
+        </div>
+      </motion.div>
 
-        {/* Fila Inferior: BARRA DE ACCIONES (Aquí van tus botones ahora) */}
-        <div className="flex items-center gap-2 px-4 py-2 overflow-x-auto no-scrollbar bg-gray-50/50">
+      {/* Floating macOS-style Workspace */}
+      <motion.div 
+        initial={{ opacity: 0, scale: 0.98, y: 20 }}
+        animate={{ opacity: 1, scale: 1, y: 0 }}
+        transition={{ duration: 0.5, ease: "easeOut" }}
+        className="flex flex-col flex-grow w-full max-w-[1600px] mx-auto bg-white/60 backdrop-blur-2xl rounded-[32px] shadow-[0_32px_64px_-12px_rgba(0,0,0,0.08)] border border-white overflow-hidden relative z-10"
+      >
+        
+        {/* Actions Toolbar */}
+        <div className="flex items-center gap-2 px-6 py-4 bg-white/40 border-b border-white overflow-x-auto no-scrollbar">
             {actionsComponent}
         </div>
-      </header>
 
-      {/* 2. ÁREA DE TRABAJO (SPLIT VIEW) */}
-      <main className="flex flex-grow min-h-0 flex-col md:flex-row overflow-hidden">
-        
-        {/* COLUMN 1: INPUT (DARK) - 50% Ancho */}
-        <section className="flex flex-1 flex-col min-w-0 overflow-hidden border-b md:border-b-0 md:border-r border-gray-800 bg-vscode-bg relative group">
-            {/* Input Header */}
-            <div className="flex h-8 shrink-0 items-center justify-between bg-[#252526] px-4 text-gray-400 select-none border-b border-black">
-                <span className="text-[10px] font-bold uppercase tracking-widest flex items-center gap-2">
-                    <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="square" strokeLinejoin="miter" strokeWidth="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"></path></svg>
-                    {inputLabel}
-                </span>
-                <span className="text-[10px] font-mono opacity-50">{inputStats}</span>
-            </div>
+        {/* Workspace Panels */}
+        <div className="flex flex-col md:flex-row flex-grow overflow-hidden">
             
-            {/* Editor */}
-            <div className="relative flex-grow min-h-0">
-                {inputComponent}
-            </div>
-        </section>
-
-        {/* COLUMN 2: OUTPUT (LIGHT) - 50% Ancho */}
-        <section className="flex flex-1 flex-col min-w-0 overflow-hidden bg-paper-bg relative">
-             {/* Output Header */}
-             <div className="flex h-8 shrink-0 items-center justify-between bg-gray-100 px-4 text-gray-500 select-none border-b border-gray-300">
-                <span className="text-[10px] font-bold uppercase tracking-widest flex items-center gap-2">
-                    <svg className="w-3 h-3 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="square" strokeLinejoin="miter" strokeWidth="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-                    {outputLabel}
-                </span>
-                {/* Decoración visual */}
-                <div className="flex gap-1">
-                    <div className="w-1.5 h-1.5 rounded-full bg-gray-300"></div>
-                    <div className="w-1.5 h-1.5 rounded-full bg-gray-300"></div>
+            {/* Input Panel */}
+            <div className="flex flex-col flex-1 border-b md:border-b-0 md:border-r border-gray-200/50 min-w-0 bg-white/50">
+              <div className="flex items-center justify-between px-6 py-3 border-b border-gray-100 bg-white/30">
+                <span className="text-xs font-bold uppercase tracking-widest text-gray-600">{inputLabel}</span>
+                <span className="text-xs font-mono text-gray-400">{inputStats}</span>
+              </div>
+              <div className="flex-grow relative overflow-hidden p-2">
+                <div className="absolute inset-2 rounded-2xl overflow-hidden border border-gray-100 bg-white shadow-sm">
+                  {inputComponent}
                 </div>
+              </div>
             </div>
 
-            {/* Editor */}
-            <div className="relative flex-grow min-h-0">
-                {outputComponent}
+            {/* Output Panel */}
+            <div className="flex flex-col flex-1 min-w-0 bg-gray-50/50">
+              <div className="flex items-center justify-between px-6 py-3 border-b border-gray-200/50 bg-gray-100/50">
+                <span className="text-xs font-bold uppercase tracking-widest text-gray-600 flex items-center gap-2">
+                  <div className="w-2 h-2 rounded-full" style={{ backgroundColor: colorVar }}></div>
+                  {outputLabel}
+                </span>
+              </div>
+              <div className="flex-grow relative overflow-hidden p-2">
+                <div className="absolute inset-2 rounded-2xl overflow-hidden border border-gray-200/50 bg-[#fafafa] shadow-inner">
+                  {outputComponent}
+                </div>
+              </div>
             </div>
-        </section>
 
-      </main>
+        </div>
+      </motion.div>
     </div>
   );
 }

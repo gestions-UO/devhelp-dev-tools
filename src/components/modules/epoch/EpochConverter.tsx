@@ -6,7 +6,7 @@ import { javascript } from "@codemirror/lang-javascript";
 import ToolShell from "@/components/layout/ToolShell";
 import CodeEditor from "@/components/ui/CodeEditor";
 import Button from "@/components/ui/Button";
-import { BsClockHistory, BsCalendarCheck, BsArrowLeftRight, BsTrash } from "react-icons/bs";
+import { Clock, CalendarCheck, ArrowSwapHorizontal2, Trash } from "reicon-react";
 
 export default function EpochConverter() {
   const [input, setInput] = useState("");
@@ -83,7 +83,7 @@ export default function EpochConverter() {
           value={input} 
           onChange={setInput} 
           extensions={[javascript()]} 
-          theme="dark" 
+          theme="light" 
           placeholder="// Paste Timestamp (169...) or Date string here..." 
         />
       }
@@ -94,23 +94,23 @@ export default function EpochConverter() {
       
       actionsComponent={
         <>
-          <Button size="sm" variant="primary" icon={<BsClockHistory />} onClick={insertNow}>
+          <Button size="sm" variant="primary" icon={<Clock />} onClick={insertNow}>
             Use "Now"
           </Button>
 
           <div className="mx-2 h-6 w-px bg-gray-300"></div>
 
-          <Button size="sm" variant="outline" icon={<BsCalendarCheck />} onClick={() => handleConvert("toHuman")}>
+          <Button size="sm" variant="outline" icon={<CalendarCheck />} onClick={() => handleConvert("toHuman")}>
             To Date
           </Button>
 
-          <Button size="sm" variant="outline" icon={<BsArrowLeftRight />} onClick={() => handleConvert("toTimestamp")}>
+          <Button size="sm" variant="outline" icon={<ArrowSwapHorizontal2 />} onClick={() => handleConvert("toTimestamp")}>
             To Timestamp
           </Button>
 
           <div className="mx-2 h-6 w-px bg-gray-300"></div>
 
-          <Button size="sm" variant="danger" icon={<BsTrash />} onClick={() => { setInput(""); setOutput(""); }}>
+          <Button size="sm" variant="danger" onClick={() => { setInput(""); setOutput(""); }}>
             Clear
           </Button>
         </>

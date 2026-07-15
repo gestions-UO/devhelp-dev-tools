@@ -6,19 +6,7 @@ import { css } from "@codemirror/lang-css";
 import ToolShell from "@/components/layout/ToolShell";
 import CodeEditor from "@/components/ui/CodeEditor";
 import Button from "@/components/ui/Button";
-import { 
-  BsPlayFill, 
-  BsPlusLg, 
-  BsFileEarmarkCode, 
-  BsFiletypeCss, 
-  BsTrash, 
-  BsLaptop, 
-  BsTablet, 
-  BsPhone, 
-  BsXLg,
-  BsBoxArrowUpRight,
-  BsExclamationTriangle
-} from "react-icons/bs";
+import { Play, Plus, CodeFile, Trash, Laptop, Tablet, Phone, X, ArrowUpRight2, AlertTriangle, Eraser } from "reicon-react";
 
 interface VirtualFile {
   name: string;
@@ -145,6 +133,19 @@ export default function HtmlStudio() {
     setCreateError("");
   };
 
+  const handleClearCurrentFile = () => {
+    setFiles(prev => prev.map(f => f.name === activeFileName ? { ...f, content: "" } : f));
+  };
+
+  const handleResetEverything = () => {
+    setFiles([
+      { name: "index.html", language: "html", removable: false, content: "" },
+      { name: "style.css", language: "css", removable: false, content: "" }
+    ]);
+    setActiveFileName("index.html");
+    setPreviewPageName("index.html");
+  };
+
   const confirmDeleteFile = () => {
     if (!fileToDelete) return;
     setFiles(files.filter(f => f.name !== fileToDelete));
@@ -179,24 +180,24 @@ export default function HtmlStudio() {
   }, [files, previewPageName]);
 
   const FileTabs = (
-    <div className="flex shrink-0 bg-[#252526] border-b border-black overflow-x-auto no-scrollbar">
+    <div className="flex shrink-0 bg-white border-b border-gray-100 overflow-x-auto no-scrollbar p-2 gap-2">
       {files.map(f => (
         <div 
           key={f.name}
           onClick={() => setActiveFileName(f.name)}
-          className={`group flex items-center gap-2 px-3 py-2 text-[10px] font-mono cursor-pointer border-r border-black select-none shrink-0 transition-colors ${activeFileName === f.name ? 'bg-[#1e1e1e] text-white border-t-2 border-t-mod-html' : 'text-gray-500 hover:bg-[#2d2d2d] hover:text-gray-300 border-t-2 border-t-transparent'}`}
+          className={`group flex items-center gap-2 px-4 py-2 text-[10px] font-bold tracking-widest uppercase cursor-pointer rounded-full select-none shrink-0 transition-all duration-300 ${activeFileName === f.name ? 'bg-blue-50 text-blue-600 shadow-sm border border-blue-100' : 'text-gray-400 hover:bg-gray-50 hover:text-gray-600 border border-transparent'}`}
         >
-          {f.language === 'html' ? <BsFileEarmarkCode className="text-mod-html"/> : <BsFiletypeCss className="text-blue-400"/>}
+          {f.language === 'html' ? <CodeFile className={activeFileName === f.name ? "text-blue-500" : "opacity-50"} size={14} /> : <CodeFile className={activeFileName === f.name ? "text-blue-500" : "opacity-50"} size={14} />}
           <span>{f.name}</span>
           {f.removable && (
-            <span onClick={(e) => { e.stopPropagation(); setFileToDelete(f.name); }} className="opacity-0 group-hover:opacity-100 hover:text-red-500 ml-1">
-                <BsTrash />
+            <span onClick={(e) => { e.stopPropagation(); setFileToDelete(f.name); }} className="opacity-0 group-hover:opacity-100 text-gray-300 hover:text-red-500 ml-1 transition-colors bg-white rounded-full p-1 shadow-sm border border-gray-100 hover:border-red-100 hover:bg-red-50">
+                <Trash size={10} />
             </span>
           )}
         </div>
       ))}
-      <button onClick={() => { setIsCreateModalOpen(true); setCreateError(""); }} className="px-3 text-gray-500 hover:text-white hover:bg-[#2d2d2d] transition-colors" title="Add Page">
-        <BsPlusLg className="w-3 h-3" />
+      <button onClick={() => { setIsCreateModalOpen(true); setCreateError(""); }} className="flex items-center justify-center w-8 h-8 rounded-full text-gray-400 hover:text-blue-600 hover:bg-blue-50 border border-dashed border-gray-300 hover:border-blue-200 transition-colors shrink-0" title="Add Page">
+        <Plus size={14} />
       </button>
     </div>
   );
@@ -214,7 +215,7 @@ export default function HtmlStudio() {
           <div className="flex flex-col h-full min-h-0">
             {FileTabs}
             <div className="flex-grow relative min-h-0">
-                <CodeEditor value={activeFile.content} onChange={updateFileContent} extensions={activeFile.language === 'css' ? [css()] : [html()]} theme="dark" />
+                <CodeEditor value={activeFile.content} onChange={updateFileContent} extensions={activeFile.language === 'css' ? [css()] : [html()]} theme="light" />
             </div>
           </div>
         }
@@ -225,9 +226,11 @@ export default function HtmlStudio() {
         }
         actionsComponent={
           <>
-            <Button size="sm" variant="primary" icon={<BsPlayFill />} onClick={() => renderPreview(iframeRef.current)}>Run / Reload</Button>
+            <Button size="sm" variant="primary" icon={<Play />} onClick={() => renderPreview(iframeRef.current)}>Run / Reload</Button>
             <div className="mx-2 h-6 w-px bg-gray-300"></div>
-            <Button size="sm" variant="outline" icon={<BsBoxArrowUpRight />} onClick={() => setDeviceModalOpen(true)}>Device View</Button>
+            <Button size="sm" variant="danger" icon={<Trash />} onClick={handleResetEverything}>Start from Scratch</Button>
+            <Button size="sm" variant="outline" icon={<Eraser />} onClick={handleClearCurrentFile}>Clear File</Button>
+            <Button size="sm" variant="outline" icon={<ArrowUpRight2 />} onClick={() => setDeviceModalOpen(true)}>Device View</Button>
           </>
         }
       />
@@ -235,17 +238,23 @@ export default function HtmlStudio() {
       {/* --- MODAL DE BORRADO --- */}
       {fileToDelete && (
         <div className="fixed inset-0 z-[110] flex items-center justify-center bg-black/60 backdrop-blur-sm p-4 animate-fade-in-up">
-          <div className="w-full max-w-sm border border-gray-200 bg-white p-6 shadow-2xl rounded-sm">
-            <div className="mb-4 flex items-center gap-3 text-red-600">
-              <BsExclamationTriangle size={24} />
-              <h3 className="text-lg font-black uppercase tracking-tighter">Confirm Deletion</h3>
-            </div>
-            <p className="mb-6 text-sm text-gray-600">
-              Are you sure you want to delete <span className="font-mono font-bold text-black">"{fileToDelete}"</span>? This action cannot be undone.
+          <div className="w-full max-w-sm bg-white/70 backdrop-blur-3xl border border-white/50 p-8 rounded-[32px] shadow-[0_8px_40px_rgba(0,0,0,0.12)]">
+            <h3 className="text-xl font-bold uppercase tracking-widest text-gray-900 mb-6 flex items-center gap-3">
+              <div className="w-10 h-10 rounded-full bg-red-100 flex items-center justify-center text-red-600 shadow-inner shrink-0">
+                <AlertTriangle size={20} />
+              </div>
+              Confirm Deletion
+            </h3>
+            <p className="font-mono text-xs text-gray-600 mb-8 leading-relaxed bg-white/50 p-4 rounded-2xl border border-white">
+              Are you sure you want to delete <span className="font-bold text-gray-900">"{fileToDelete}"</span>? This action cannot be undone.
             </p>
             <div className="flex justify-end gap-3">
-              <Button variant="outline" size="sm" onClick={() => setFileToDelete(null)}>Cancel</Button>
-              <Button variant="danger" size="sm" onClick={confirmDeleteFile}>Delete File</Button>
+              <button onClick={() => setFileToDelete(null)} className="px-6 py-3 text-sm font-bold tracking-widest text-gray-500 uppercase transition-all duration-300 bg-white border border-gray-200 rounded-full hover:bg-gray-50">
+                Cancel
+              </button>
+              <button onClick={confirmDeleteFile} className="px-6 py-3 text-sm font-bold tracking-widest text-white uppercase transition-all duration-300 bg-red-500 rounded-full shadow-[0_8px_30px_rgb(239,68,68,0.2)] hover:shadow-[0_8px_30px_rgb(239,68,68,0.4)] hover:bg-red-600 hover:-translate-y-1">
+                Delete File
+              </button>
             </div>
           </div>
         </div>
@@ -254,10 +263,15 @@ export default function HtmlStudio() {
       {/* --- MODAL DE CREACIÓN DE ARCHIVO --- */}
       {isCreateModalOpen && (
         <div className="fixed inset-0 z-[110] flex items-center justify-center bg-black/60 backdrop-blur-sm p-4 animate-fade-in-up">
-          <div className="w-full max-w-sm border border-black bg-white p-6 shadow-2xl rounded-sm">
-            <h3 className="mb-4 text-lg font-black uppercase tracking-tighter">Create New Page</h3>
-            <div className="mb-4">
-              <label className="mb-1 block text-[10px] font-bold uppercase tracking-widest text-gray-400">Filename</label>
+          <div className="w-full max-w-sm bg-white/70 backdrop-blur-3xl border border-white/50 p-8 rounded-[32px] shadow-[0_8px_40px_rgba(0,0,0,0.12)]">
+            <h3 className="text-xl font-bold uppercase tracking-widest text-gray-900 mb-6 flex items-center gap-3">
+              <div className="w-10 h-10 rounded-full bg-blue-100 flex items-center justify-center text-blue-600 shadow-inner shrink-0">
+                <Plus size={20} />
+              </div>
+              Create New Page
+            </h3>
+            <div className="mb-8">
+              <label className="mb-2 block text-[10px] font-bold uppercase tracking-widest text-gray-400">Filename</label>
               <input 
                 autoFocus
                 type="text" 
@@ -265,33 +279,42 @@ export default function HtmlStudio() {
                 onChange={(e) => setNewFileNameInput(e.target.value)}
                 onKeyDown={(e) => e.key === 'Enter' && handleCreateFile()}
                 placeholder="contact.html"
-                className="w-full border border-gray-300 p-2 font-mono text-sm outline-none focus:border-mod-html"
+                className="w-full bg-white/50 backdrop-blur-xl border border-white rounded-2xl py-3 px-4 text-sm text-gray-800 placeholder-gray-400 focus:outline-none focus:border-blue-400 focus:ring-4 focus:ring-blue-500/10 transition-all duration-300"
               />
-              {createError && <p className="mt-1 text-[10px] font-bold text-red-500 uppercase">{createError}</p>}
+              {createError && <p className="mt-2 text-[10px] font-bold text-red-500 uppercase flex items-center gap-1"><AlertTriangle size={12} /> {createError}</p>}
             </div>
             <div className="flex justify-end gap-3">
-              <Button variant="ghost" size="sm" onClick={() => setIsCreateModalOpen(false)}>Cancel</Button>
-              <Button variant="primary" size="sm" onClick={handleCreateFile}>Create File</Button>
+              <button onClick={() => setIsCreateModalOpen(false)} className="px-6 py-3 text-sm font-bold tracking-widest text-gray-500 uppercase transition-all duration-300 bg-white border border-gray-200 rounded-full hover:bg-gray-50">
+                Cancel
+              </button>
+              <button onClick={handleCreateFile} className="px-6 py-3 text-sm font-bold tracking-widest text-white uppercase transition-all duration-300 bg-blue-600 rounded-full shadow-[0_8px_30px_rgb(37,99,235,0.2)] hover:shadow-[0_8px_30px_rgb(37,99,235,0.4)] hover:bg-blue-700 hover:-translate-y-1">
+                Create File
+              </button>
             </div>
           </div>
         </div>
       )}
 
-      {/* --- MODAL DE DISPOSITIVOS (Original) --- */}
+      {/* --- MODAL DE DISPOSITIVOS --- */}
       {isDeviceModalOpen && (
-        <div className="fixed inset-0 z-[100] bg-black/90 backdrop-blur-sm flex flex-col animate-fade-in-up">
-            <div className="h-16 flex items-center justify-between px-6 border-b border-gray-800 bg-black text-white shrink-0">
-                <div className="flex items-center gap-4">
-                    <span className="font-bold uppercase tracking-widest text-mod-html">Device Preview</span>
-                    <div className="flex gap-2">
-                        <button onClick={() => setDeviceMode("mobile")} className={`p-2 rounded ${deviceMode === 'mobile' ? 'bg-mod-html text-white' : 'text-gray-400 hover:bg-gray-800'}`}><BsPhone size={20} /></button>
-                        <button onClick={() => setDeviceMode("tablet")} className={`p-2 rounded ${deviceMode === 'tablet' ? 'bg-mod-html text-white' : 'text-gray-400 hover:bg-gray-800'}`}><BsTablet size={20} /></button>
-                        <button onClick={() => setDeviceMode("desktop")} className={`p-2 rounded ${deviceMode === 'desktop' ? 'bg-mod-html text-white' : 'text-gray-400 hover:bg-gray-800'}`}><BsLaptop size={20} /></button>
+        <div className="fixed inset-0 z-[100] bg-black/40 backdrop-blur-md flex flex-col animate-fade-in-up">
+            <div className="h-20 flex items-center justify-between px-8 bg-white/70 backdrop-blur-3xl border-b border-white/50 shrink-0 shadow-sm z-10">
+                <div className="flex items-center gap-6">
+                    <span className="font-bold uppercase tracking-[0.2em] text-gray-900 text-sm flex items-center gap-3">
+                      <div className="w-8 h-8 rounded-full bg-blue-100 flex items-center justify-center text-blue-600">
+                        <ArrowUpRight2 size={16} />
+                      </div>
+                      Device Preview
+                    </span>
+                    <div className="flex gap-2 bg-white/50 p-1.5 rounded-full border border-white">
+                        <button onClick={() => setDeviceMode("mobile")} className={`p-2.5 rounded-full transition-all duration-300 ${deviceMode === 'mobile' ? 'bg-blue-600 text-white shadow-md' : 'text-gray-400 hover:text-gray-800 hover:bg-white'}`}><Phone size={18} /></button>
+                        <button onClick={() => setDeviceMode("tablet")} className={`p-2.5 rounded-full transition-all duration-300 ${deviceMode === 'tablet' ? 'bg-blue-600 text-white shadow-md' : 'text-gray-400 hover:text-gray-800 hover:bg-white'}`}><Tablet size={18} /></button>
+                        <button onClick={() => setDeviceMode("desktop")} className={`p-2.5 rounded-full transition-all duration-300 ${deviceMode === 'desktop' ? 'bg-blue-600 text-white shadow-md' : 'text-gray-400 hover:text-gray-800 hover:bg-white'}`}><Laptop size={18} /></button>
                     </div>
                 </div>
-                <button onClick={() => setDeviceModalOpen(false)} className="text-gray-400 hover:text-white"><BsXLg size={24} /></button>
+                <button onClick={() => setDeviceModalOpen(false)} className="w-10 h-10 flex items-center justify-center rounded-full bg-white border border-gray-200 text-gray-400 hover:text-gray-800 hover:bg-gray-50 transition-all shadow-sm"><X size={20} /></button>
             </div>
-            <div className="flex-grow flex items-center justify-center bg-[#1a1a1a] overflow-auto p-8 min-h-0">
+            <div className="flex-grow flex items-center justify-center overflow-auto p-8 min-h-0 relative">
                 <div className="bg-white transition-all duration-300 shadow-2xl relative overflow-hidden flex flex-col shrink-0"
                     style={{
                         width: deviceMode === 'mobile' ? '375px' : deviceMode === 'tablet' ? '768px' : '100%',

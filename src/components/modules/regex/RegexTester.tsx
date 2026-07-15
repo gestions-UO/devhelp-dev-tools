@@ -4,13 +4,7 @@ import { useState, useEffect, useRef } from "react";
 import ToolShell from "@/components/layout/ToolShell";
 import CodeEditor from "@/components/ui/CodeEditor";
 import Button from "@/components/ui/Button";
-import { 
-  BsPlayFill, 
-  BsTrash, 
-  BsBugFill, 
-  BsFastForwardFill, 
-  BsPauseFill 
-} from "react-icons/bs";
+import { Play, Trash, Bug, FastForward, Pause } from "reicon-react";
 
 // Tipos para nuestro motor de visualización
 interface CharState {
@@ -159,8 +153,8 @@ export default function RegexTester() {
   const RegexControls = (
     <div className="flex flex-col h-full">
       {/* Pattern Bar */}
-      <div className="bg-[#252526] p-2 border-b border-black flex flex-col gap-2 shrink-0">
-        <div className="flex items-center bg-[#1e1e1e] border border-gray-600 rounded px-2 py-1">
+      <div className="bg-gray-50 p-2 border-b border-gray-200 flex flex-col gap-2 shrink-0">
+        <div className="flex items-center bg-white border border-gray-600 rounded px-2 py-1">
           <span className="text-gray-500 font-mono mr-1">/</span>
           <input 
             type="text" 
@@ -182,9 +176,9 @@ export default function RegexTester() {
                     setFlags(prev => ({...prev, [f]: !prev[f as keyof typeof flags]}));
                     setCursor(-1); // Reset si cambian flags
                 }}
-                className="accent-mod-regex h-3 w-3 bg-[#1e1e1e] border-gray-600" 
+                className="accent-mod-regex h-3 w-3 bg-white border-gray-600" 
               />
-              <span className="text-[10px] font-mono uppercase text-gray-400 group-hover:text-white transition-colors">{f}</span>
+              <span className="text-[10px] font-mono uppercase text-gray-400 group-hover:text-gray-800 transition-colors">{f}</span>
             </label>
           ))}
         </div>
@@ -194,7 +188,7 @@ export default function RegexTester() {
          <CodeEditor 
             value={textInput} 
             onChange={(val) => { setTextInput(val); setCursor(-1); }} 
-            theme="dark" 
+            theme="light" 
             placeholder="Text to test..." 
          />
       </div>
@@ -260,8 +254,8 @@ export default function RegexTester() {
                             bgClass = "bg-red-100 text-red-300 line-through decoration-red-300/50"; // Efecto tachado suave para descarte
                             textClass = "text-red-400 opacity-60";
                         } else if (item.status === "scanning") {
-                            bgClass = "bg-blue-500 text-white shadow-lg scale-110 px-1 rounded z-10 inline-block"; // Cursor actual
-                            textClass = "text-white font-bold animate-pulse";
+                            bgClass = "bg-blue-500 text-gray-800 shadow-lg scale-110 px-1 rounded z-10 inline-block"; // Cursor actual
+                            textClass = "text-gray-800 font-bold animate-pulse";
                         } else {
                             textClass = "text-gray-300"; // Pendiente (futuro)
                         }
@@ -286,7 +280,7 @@ export default function RegexTester() {
           <Button 
             size="sm" 
             variant="primary" 
-            icon={isPlaying ? <BsPauseFill /> : <BsPlayFill />} 
+            icon={isPlaying ? <Pause /> : <Play />} 
             onClick={togglePlay}
             className={isPlaying ? "bg-red-500 border-red-500 hover:bg-red-600" : ""}
           >
@@ -297,7 +291,7 @@ export default function RegexTester() {
           <Button 
             size="sm" 
             variant="outline" 
-            icon={<BsFastForwardFill />} 
+            icon={<FastForward />} 
             onClick={handleStep}
             title="Evaluate next character"
           >
@@ -309,7 +303,7 @@ export default function RegexTester() {
           <Button 
             size="sm" 
             variant="danger" 
-            icon={<BsTrash />} 
+            
             onClick={() => { setCursor(-1); setIsPlaying(false); }}
           >
             Reset
